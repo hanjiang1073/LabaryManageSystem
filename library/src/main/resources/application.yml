@@ -1,0 +1,31 @@
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/train?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: gq736218
+  application:
+    name: login
+  cloud:
+    nacos:
+      discovery:
+        namespace: public
+        server-addr: 127.0.0.1:8848
+        group: spring-cloud
+    loadbalancer:
+      ribbon:
+        enabled: false
+  mvv:
+    resources:
+      add-mapping:true
+ribbon:
+  nacos:
+    enabled: false
+
+server:
+  port: 8080
+
+
