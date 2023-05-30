@@ -29,7 +29,7 @@ public class UserController {
     public Map<String, Object> test(@RequestParam("token") String jwt) throws Exception {
         //这个步骤可以使用自定义注解+AOP编程做解析jwt的逻辑，这里为了简便就直接写在controller里
         System.out.println("66666");
-        Claims claims = jwtUtil.parseJWT(jwt);
+        Claims claims = JwtUtil.parseJWT(jwt);
         System.out.println(claims);
         HashMap<String, Object> map = new HashMap<>();
         String name = claims.get("username", String.class);

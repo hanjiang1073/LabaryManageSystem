@@ -9,21 +9,21 @@ spring:
     password: gq736218
   application:
     name: login
-  cloud:
-    nacos:
-      discovery:
-        namespace: public
-        server-addr: 127.0.0.1:8848
-        group: spring-cloud
-    loadbalancer:
-      ribbon:
-        enabled: false
-  mvv:
-    resources:
-      add-mapping:true
-ribbon:
-  nacos:
-    enabled: false
+#  cloud:
+#    nacos:
+#      discovery:
+#        namespace: public
+#        server-addr: 127.0.0.1:8848
+#        group: spring-cloud
+#    loadbalancer:
+#      ribbon:
+#        enabled: false
+#  mvv:
+#    resources:
+#      add-mapping:true
+#ribbon:
+#  nacos:
+#    enabled: false
 
 server:
   port: 8080
