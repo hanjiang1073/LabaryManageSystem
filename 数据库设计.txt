@@ -27,3 +27,9 @@ remark：存储评价内容
 id：存储用户id，作为主键
 username：存储用户名
 password：存储用户密码
+
+5.borrow
+book_id:图书id
+user_id:用户id
+start_date:借书开始时间
+end_date:最晚还书时间
