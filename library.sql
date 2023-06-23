@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mylocalhost
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 80033 (8.0.33)
+ Source Server Version : 80029 (8.0.29)
  Source Host           : localhost:3306
  Source Schema         : library
 
  Target Server Type    : MySQL
- Target Server Version : 80033 (8.0.33)
+ Target Server Version : 80029 (8.0.29)
  File Encoding         : 65001
 
- Date: 21/06/2023 15:58:40
+ Date: 23/06/2023 10:23:40
 */
 
 SET NAMES utf8mb4;
@@ -31,10 +31,25 @@ CREATE TABLE `book`  (
   `book_writtentime` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `order_information_UNIQUE`(`order_information` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of book
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for inventory
+-- ----------------------------
+DROP TABLE IF EXISTS `inventory`;
+CREATE TABLE `inventory`  (
+  `book_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  INDEX `inventory_book_id`(`book_id` ASC) USING BTREE,
+  CONSTRAINT `inventory_book_id` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of inventory
 -- ----------------------------
 
 -- ----------------------------
@@ -49,7 +64,7 @@ CREATE TABLE `library_manager`  (
   `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `booksnum` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of library_manager
@@ -60,6 +75,28 @@ INSERT INTO `library_manager` VALUES (3, '6：00', '23：30', '三楼图书室',
 INSERT INTO `library_manager` VALUES (4, '5：00', '1：00', '四楼自习室', '全周开放', 100);
 
 -- ----------------------------
+-- Table structure for queue
+-- ----------------------------
+DROP TABLE IF EXISTS `queue`;
+CREATE TABLE `queue`  (
+  `queue_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `book_id` int NOT NULL,
+  `queue_time` datetime NOT NULL,
+  `status` int NOT NULL,
+  PRIMARY KEY (`queue_id`) USING BTREE,
+  INDEX `queue_user_id`(`user_id` ASC) USING BTREE,
+  INDEX `queue_book_id`(`book_id` ASC) USING BTREE,
+  CONSTRAINT `queue_book_id` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `queue_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `queue_status` CHECK ((`status` = 0) or (`status` = 1) or (`status` = 2))
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of queue
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for remark
 -- ----------------------------
 DROP TABLE IF EXISTS `remark`;
@@ -68,10 +105,32 @@ CREATE TABLE `remark`  (
   `book_id` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `remark` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of remark
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for reservation
+-- ----------------------------
+DROP TABLE IF EXISTS `reservation`;
+CREATE TABLE `reservation`  (
+  `reservation_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `book_id` int NOT NULL,
+  `reservation_time` datetime NOT NULL,
+  `status` int NOT NULL,
+  PRIMARY KEY (`reservation_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `book_id`(`book_id` ASC) USING BTREE,
+  CONSTRAINT `book_id` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `status` CHECK ((`status` = 0) or (`status` = 1) or (`status` = 2))
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of reservation
 -- ----------------------------
 
 -- ----------------------------
@@ -83,7 +142,7 @@ CREATE TABLE `user`  (
   `username` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `password` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
