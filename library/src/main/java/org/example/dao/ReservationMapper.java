@@ -1,6 +1,6 @@
-package com.example.springboot.mapper;
+package org.example.dao;
 
-import com.example.springboot.entity.Reservation;
+import org.example.entity.Reservation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -1,14 +1,10 @@
-package com.example.springboot.entity;
+package org.example.entity;
 
-import java.io.Serializable;
-import cn.hutool.core.annotation.Alias;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.example.springboot.common.LDTConfig;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
 * <p>

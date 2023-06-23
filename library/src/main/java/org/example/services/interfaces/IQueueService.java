@@ -1,6 +1,6 @@
-package com.example.springboot.service;
+package org.example.services.interfaces;
 
-import com.example.springboot.entity.Queue;
+import org.example.entity.Queue;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

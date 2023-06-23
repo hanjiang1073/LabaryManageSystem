@@ -1,28 +1,23 @@
-package com.example.springboot.controller;
+package org.example.controllers;
 
-import com.example.springboot.common.annotation.AutoLog;
-import cn.hutool.core.date.DateUtil;
-import com.example.springboot.entity.User;
-import com.example.springboot.utils.SessionUtils;
-import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletOutputStream;
-import java.net.URLEncoder;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
-import java.io.InputStream;
-import java.util.List;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.springboot.common.Result;
-import org.springframework.web.multipart.MultipartFile;
-import com.example.springboot.service.IQueueService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.example.common.Result;
 import com.example.springboot.entity.Queue;
+import com.example.springboot.service.IQueueService;
+import org.example.common.AutoLog;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.List;
 
 /**
 * <p>
@@ -74,12 +69,12 @@ public class QueueController {
 
     @GetMapping
     public Result findAll() {
-        return Result.success(queueService.list());
+        return Result.ok(queueService.list());
     }
 
     @GetMapping("/{id}")
     public Result findOne(@PathVariable Integer id) {
-        return Result.success(queueService.getById(id));
+        return Result.ok(queueService.getById(id));
     }
 
     @GetMapping("/page")
@@ -88,7 +83,7 @@ public class QueueController {
                            @RequestParam Integer pageSize) {
         QueryWrapper<Queue> queryWrapper = new QueryWrapper<Queue>().orderByDesc("id");
         queryWrapper.like(!"".equals(name), "name", name);
-        return Result.success(queueService.page(new Page<>(pageNum, pageSize), queryWrapper));
+        return Result.ok(queueService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
 
     /**
@@ -118,9 +113,7 @@ public class QueueController {
 
     /**
     * excel 导入
-    * @param file
-    * @throws Exception
-    */
+     */
     @PostMapping("/import")
     public Result imp(MultipartFile file) throws Exception {
         InputStream inputStream = file.getInputStream();

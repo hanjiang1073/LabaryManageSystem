@@ -1,8 +1,8 @@
-package com.example.springboot.service.impl;
+package org.example.services.impls;
 
-import com.example.springboot.entity.Queue;
-import com.example.springboot.mapper.QueueMapper;
-import com.example.springboot.service.IQueueService;
+import org.example.entity.Queue;
+import org.example.dao.QueueMapper;
+import org.example.services.interfaces.IQueueService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

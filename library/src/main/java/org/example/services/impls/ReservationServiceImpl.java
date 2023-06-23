@@ -1,9 +1,9 @@
-package com.example.springboot.service.impl;
+package org.example.services.impls;
 
-import com.example.springboot.entity.Reservation;
-import com.example.springboot.mapper.ReservationMapper;
-import com.example.springboot.service.IReservationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.example.dao.ReservationMapper;
+import org.example.entity.Reservation;
+import org.example.services.interfaces.IReservationService;
 import org.springframework.stereotype.Service;
 
 /**
