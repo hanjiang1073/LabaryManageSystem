@@ -6,7 +6,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/library?useUnicode=true&characterEncoding=utf-8
     username: root
-    password: 200136
+#    password: 200136
+    password: 2002820lzy
 #  application:
 #    name: login
 ##  cloud:
@@ -26,6 +27,6 @@ spring:
 #    enabled: false
 
 server:
-  port: 8080
+  port: 8081
 
 
