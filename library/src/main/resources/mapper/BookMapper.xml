@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.dao.BookMapper">
+
+
+    <select id="getBooks" resultType="org.example.entity.Book">
+        select id ,name from book
+    </select>
+
+    <select id="searchBooks" resultType="org.example.entity.Book">
+        select id,name from book where name = #{name}
+    </select>
+
+    <select id="getBookInformation" resultType="org.example.entity.Book">
+        select * from book where id = #{id}
+    </select>
+
+    <insert id="borrowBook" parameterType="org.example.entity.Borrow">
+        INSERT INTO borrow (bookId, userId,startDate,endDate) VALUES (#{bookId}, #{userId},#{startDate},#{endDate})
+    </insert>
+
+    <delete id="returnBook" parameterType="org.example.entity.Borrow">
+        DELETE from borrow where bookId=#{bookId} and userId=#{userId}
+    </delete>
+
+    <insert id="reviewBook" parameterType="org.example.entity.Comment">
+        INSERT INTO comment (bookId, userId,comment) VALUES (#{bookId}, #{userId},#{comment})
+    </insert>
+</mapper>

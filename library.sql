@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : asuka
  Source Server Type    : MySQL
- Source Server Version : 80029 (8.0.29)
+ Source Server Version : 80033 (8.0.33)
  Source Host           : localhost:3306
  Source Schema         : library
 
  Target Server Type    : MySQL
- Target Server Version : 80029 (8.0.29)
+ Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 23/06/2023 10:23:40
+ Date: 24/06/2023 15:11:53
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,42 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
+INSERT INTO `book` VALUES (1, '三体1', '三体1', 'sjskj', 'sdada', 'adadad', 'qqweqwe');
+INSERT INTO `book` VALUES (2, '三体2', '22', '333', '444', '555', '666');
+
+-- ----------------------------
+-- Table structure for borrow
+-- ----------------------------
+DROP TABLE IF EXISTS `borrow`;
+CREATE TABLE `borrow`  (
+  `bookId` int NOT NULL,
+  `userId` int NULL DEFAULT NULL,
+  `startDate` datetime NULL DEFAULT NULL,
+  `endDate` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`bookId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of borrow
+-- ----------------------------
+INSERT INTO `borrow` VALUES (13, 56, '2023-06-24 14:21:07', '2023-07-24 14:21:07');
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment`  (
+  `bookId` int NOT NULL,
+  `userId` int NULL DEFAULT NULL,
+  `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`bookId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+INSERT INTO `comment` VALUES (1, 33, 'it is good!');
+INSERT INTO `comment` VALUES (2, 33, 'it is good!');
 
 -- ----------------------------
 -- Table structure for inventory
@@ -46,7 +82,7 @@ CREATE TABLE `inventory`  (
   `quantity` int NOT NULL,
   INDEX `inventory_book_id`(`book_id` ASC) USING BTREE,
   CONSTRAINT `inventory_book_id` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of inventory
@@ -90,7 +126,7 @@ CREATE TABLE `queue`  (
   CONSTRAINT `queue_book_id` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `queue_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `queue_status` CHECK ((`status` = 0) or (`status` = 1) or (`status` = 2))
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of queue
@@ -127,7 +163,7 @@ CREATE TABLE `reservation`  (
   CONSTRAINT `book_id` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `status` CHECK ((`status` = 0) or (`status` = 1) or (`status` = 2))
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of reservation
