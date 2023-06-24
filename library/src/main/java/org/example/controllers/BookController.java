@@ -49,25 +49,37 @@ public class BookController {
     }
 
     @PostMapping("/borrowBook")
-    public Integer borrowBook(@RequestBody Borrow borrow) {
+    public Result borrowBook(@RequestBody Borrow borrow) {
         int bookId=borrow.getBookId();
         int userId=borrow.getUserId();
-        return bookService.borrowBook(bookId, userId);
+        int i= bookService.borrowBook(bookId, userId);
+        if(i==1){
+            return Result.success();
+        }
+        else return Result.wrong();
     }
 
     @PostMapping("/returnBook")
-    public Integer returnBook(@RequestBody Borrow borrow ){
+    public Result returnBook(@RequestBody Borrow borrow ){
         int bookId=borrow.getBookId();
         int userId=borrow.getUserId();
-        return bookService.returnBook(bookId,userId);
+        int i = bookService.returnBook(bookId,userId);
+        if(i==1){
+            return Result.success();
+        }
+        else return Result.wrong();
     }
 
     @PostMapping("/reviewBook")
-    public Integer reviewBook(@RequestBody Comment comment){
+    public Result reviewBook(@RequestBody Comment comment){
         int bookId=comment.getBookId();
         int userId=comment.getUserId();
         String comment1=comment.getComment();
-        return bookService.reviewBook(bookId,userId,comment1);
+        int i= bookService.reviewBook(bookId,userId,comment1);
+        if(i==1){
+            return Result.success();
+        }
+        else return Result.wrong();
     }
 
 }

@@ -33,6 +33,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int borrowBook(int book_id, int user_id) {
+        int numofBook =bookMapper.getBookNum(book_id);
+        if(numofBook<=0)
+            return 0;
         Date start_date = new Date(System.currentTimeMillis());
         Date end_date=new Date(System.currentTimeMillis()+24*60*60*1000*30L);
         Borrow borrow =new Borrow();
@@ -57,6 +60,8 @@ public class BookServiceImpl implements BookService {
         comment1.setBookId(book_id);
         comment1.setUserId(user_id);
         comment1.setComment(comment);
+        Date date = new Date(System.currentTimeMillis());
+        comment1.setDate(date);
         return bookMapper.reviewBook(comment1);
 
     }

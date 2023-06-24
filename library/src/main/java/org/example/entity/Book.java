@@ -3,13 +3,15 @@ package org.example.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class Book {
     private Integer id;
     private String name;
     private String bookContent;
     private String orderInformation;
-    private String bookNumOnlibrary;
+    private Integer bookNumOnlibrary;
     private String bookKind;
 
     @Override
@@ -25,7 +27,7 @@ public class Book {
                 '}';
     }
 
-    private String bookWrittentime;
+    private Date bookWrittentime;
 
     public Integer getId() {
         return id;
@@ -59,13 +61,7 @@ public class Book {
         this.orderInformation = orderInformation;
     }
 
-    public String getBookNumOnlibrary() {
-        return bookNumOnlibrary;
-    }
 
-    public void setBookNumOnlibrary(String bookNumOnlibrary) {
-        this.bookNumOnlibrary = bookNumOnlibrary;
-    }
 
     public String getBookKind() {
         return bookKind;
@@ -75,11 +71,19 @@ public class Book {
         this.bookKind = bookKind;
     }
 
-    public String getBookWrittentime() {
+    public Integer getBookNumOnlibrary() {
+        return bookNumOnlibrary;
+    }
+
+    public void setBookNumOnlibrary(Integer bookNumOnlibrary) {
+        this.bookNumOnlibrary = bookNumOnlibrary;
+    }
+
+    public Date getBookWrittentime() {
         return bookWrittentime;
     }
 
-    public void setBookWrittentime(String bookWrittentime) {
+    public void setBookWrittentime(Date bookWrittentime) {
         this.bookWrittentime = bookWrittentime;
     }
 }

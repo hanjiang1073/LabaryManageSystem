@@ -17,11 +17,14 @@ public interface BookMapper {
 
     Book getBookInformation(int id);
 
+    int getBookNum(int id);
     int borrowBook(Borrow borrow);
 
     int returnBook(Borrow borrow);
 
     int reviewBook(Comment comment);
+
+
 
 
 

@@ -8,7 +8,7 @@
     </select>
 
     <select id="searchBooks" resultType="org.example.entity.Book">
-        select id,name from book where name = #{name}
+        select id,name from book where name like CONCAT('%',#{name},'%')
     </select>
 
     <select id="getBookInformation" resultType="org.example.entity.Book">
@@ -24,6 +24,11 @@
     </delete>
 
     <insert id="reviewBook" parameterType="org.example.entity.Comment">
-        INSERT INTO comment (bookId, userId,comment) VALUES (#{bookId}, #{userId},#{comment})
+        INSERT INTO comment (bookId, userId,comment,date) VALUES (#{bookId}, #{userId},#{comment},#{date})
     </insert>
+
+    <select id="getBookNum" resultType="int">
+        select book_num_onlibrary from book where id = #{id}
+    </select>
+
 </mapper>

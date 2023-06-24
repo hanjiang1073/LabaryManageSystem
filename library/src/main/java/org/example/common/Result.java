@@ -38,4 +38,11 @@ public class Result<T> {
         result.setMsg(Constant.MSG_OK);
         return result;
     }
+
+    public static <T> Result<T> wrong() {
+        Result<T> result = new Result<>();
+        result.setCode(Constant.CODE_ERROR);
+        result.setMsg(Constant.MSG_ERROR);
+        return result;
+    }
 }
