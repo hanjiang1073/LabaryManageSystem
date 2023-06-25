@@ -54,7 +54,7 @@ public class BookController {
         int userId=borrow.getUserId();
         int i= bookService.borrowBook(bookId, userId);
         if(i==1){
-            return Result.success();
+            return Result.ok("借阅图书成功：userid: "+userId+" bookid: "+bookId);
         }
         else {
             return Result.wrong();
@@ -67,7 +67,7 @@ public class BookController {
         int userId=borrow.getUserId();
         int i = bookService.returnBook(bookId,userId);
         if(i==1){
-            return Result.success();
+            return Result.ok("归还图书成功：userid: "+userId+" bookid: "+bookId);
         }
         else return Result.wrong();
     }
@@ -79,7 +79,7 @@ public class BookController {
         String comment1=comment.getComment();
         int i= bookService.reviewBook(bookId,userId,comment1);
         if(i==1){
-            return Result.success();
+            return Result.ok("评论成功！ 评论内容： " +comment1);
         }
         else return Result.wrong();
     }

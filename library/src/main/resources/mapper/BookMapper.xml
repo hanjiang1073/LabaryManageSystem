@@ -4,11 +4,11 @@
 
 
     <select id="getBooks" resultType="org.example.entity.Book">
-        select id ,name from book
+        select * from book
     </select>
 
     <select id="searchBooks" resultType="org.example.entity.Book">
-        select id,name from book where name like CONCAT('%',#{name},'%')
+        select * from book where name like CONCAT('%',#{name},'%')
     </select>
 
     <select id="getBookInformation" resultType="org.example.entity.Book">
