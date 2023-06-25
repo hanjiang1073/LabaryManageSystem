@@ -9,6 +9,16 @@ public class Comment {
     private Integer bookId;
     private Integer userId;
     private String comment;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    private Date date;
     public Integer getBookId() {
         return bookId;
     }

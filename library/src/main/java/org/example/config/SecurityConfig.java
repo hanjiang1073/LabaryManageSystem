@@ -59,6 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/opentimeinfo").permitAll()
                 .antMatchers("/closetimeinfo").permitAll()
                 .antMatchers("/booksnuminfo").permitAll()
+                .antMatchers("/book/getBooks").permitAll()
+                .antMatchers("/book/searchBook").permitAll()
+                .antMatchers("/book/getBookInformation").permitAll()
 //                .antMatchers("/ShipOrder/**").permitAll() // 在这里配置不需要认证的API路径
                 .anyRequest().authenticated()
                 .and()

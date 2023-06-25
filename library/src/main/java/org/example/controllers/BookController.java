@@ -29,7 +29,7 @@ public class BookController {
     }
 
     @PostMapping("/searchBook")
-    public Result searchBook(@RequestBody String name) {
+    public Result searchBook(@RequestParam String name) {
         List<Book> bookList = bookService.searchBooks(name);
         if (bookList.isEmpty()) {
             return Result.error(bookList);
@@ -39,7 +39,7 @@ public class BookController {
     }
 
     @PostMapping("/getBookInformation")
-    public Result getBookInformation(@RequestBody int bookId) {
+    public Result getBookInformation(@RequestParam int bookId) {
         Book book = bookService.getBookInformation(bookId);
         if (book.getBookContent().isEmpty()) {
             return Result.error(book);

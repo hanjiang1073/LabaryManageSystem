@@ -62,7 +62,7 @@ public class BookServiceImpl implements BookService {
         comment1.setUserId(user_id);
         comment1.setComment(comment);
         Date date = new Date(System.currentTimeMillis());
-        //comment1.setDate(date);
+        comment1.setDate(date);
         return bookMapper.reviewBook(comment1);
 
     }
