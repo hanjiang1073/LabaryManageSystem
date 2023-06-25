@@ -27,7 +27,7 @@ public class Book {
                 '}';
     }
 
-    private Date bookWrittentime;
+    private String bookWrittentime;
 
     public Integer getId() {
         return id;
@@ -79,11 +79,11 @@ public class Book {
         this.bookNumOnlibrary = bookNumOnlibrary;
     }
 
-    public Date getBookWrittentime() {
+    public String getBookWrittentime() {
         return bookWrittentime;
     }
 
-    public void setBookWrittentime(Date bookWrittentime) {
+    public void setBookWrittentime(String bookWrittentime) {
         this.bookWrittentime = bookWrittentime;
     }
 }

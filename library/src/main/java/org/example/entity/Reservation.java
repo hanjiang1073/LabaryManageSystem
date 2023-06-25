@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Reservation implements Serializable {
 
 private static final long serialVersionUID = 1L;
 
+    @TableId("reservation_id")
     private Integer reservationId;
 
     private Integer userId;

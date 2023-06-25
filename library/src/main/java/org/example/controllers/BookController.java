@@ -56,7 +56,9 @@ public class BookController {
         if(i==1){
             return Result.success();
         }
-        else return Result.wrong();
+        else {
+            return Result.wrong();
+        }
     }
 
     @PostMapping("/returnBook")

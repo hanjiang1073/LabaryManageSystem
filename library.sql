@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : asuka
+ Source Server         : mylocalhost
  Source Server Type    : MySQL
  Source Server Version : 80033 (8.0.33)
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 24/06/2023 15:11:53
+ Date: 25/06/2023 21:30:23
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `book`  (
   `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `book_content` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `order_information` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `book_num_onlibrary` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `book_num_onlibrary` int NULL DEFAULT NULL,
   `book_kind` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `book_writtentime` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -36,8 +36,8 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES (1, '三体1', '三体1', 'sjskj', 'sdada', 'adadad', 'qqweqwe');
-INSERT INTO `book` VALUES (2, '三体2', '22', '333', '444', '555', '666');
+INSERT INTO `book` VALUES (1, '三体1', '三体1', '456', 333, 'adadad', 'qqweqwe');
+INSERT INTO `book` VALUES (2, '三体2', '22', '333', 444, '555', '666');
 
 -- ----------------------------
 -- Table structure for borrow
@@ -49,7 +49,7 @@ CREATE TABLE `borrow`  (
   `startDate` datetime NULL DEFAULT NULL,
   `endDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`bookId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of borrow
@@ -63,15 +63,14 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
   `bookId` int NOT NULL,
   `userId` int NULL DEFAULT NULL,
-  `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`bookId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `date` datetime NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, 33, 'it is good!');
-INSERT INTO `comment` VALUES (2, 33, 'it is good!');
+INSERT INTO `comment` VALUES (1, 1, '好好好', '2023-06-25 20:52:00');
 
 -- ----------------------------
 -- Table structure for inventory
@@ -126,11 +125,12 @@ CREATE TABLE `queue`  (
   CONSTRAINT `queue_book_id` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `queue_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `queue_status` CHECK ((`status` = 0) or (`status` = 1) or (`status` = 2))
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of queue
 -- ----------------------------
+INSERT INTO `queue` VALUES (12, 1, 2, '2023-06-24 14:04:40', 0);
 
 -- ----------------------------
 -- Table structure for remark
@@ -168,6 +168,9 @@ CREATE TABLE `reservation`  (
 -- ----------------------------
 -- Records of reservation
 -- ----------------------------
+INSERT INTO `reservation` VALUES (7, 1, 1, '2023-06-24 14:04:40', 0);
+INSERT INTO `reservation` VALUES (10, 1, 1, '2023-06-24 14:04:40', 0);
+INSERT INTO `reservation` VALUES (11, 1, 2, '2023-06-24 14:04:40', 0);
 
 -- ----------------------------
 -- Table structure for user
@@ -175,14 +178,16 @@ CREATE TABLE `reservation`  (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `username` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`, `username`) USING BTREE,
+  INDEX `id`(`id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, '郭琦', '123456');
+INSERT INTO `user` VALUES (79, '蒋涵', '123456');
 
 SET FOREIGN_KEY_CHECKS = 1;

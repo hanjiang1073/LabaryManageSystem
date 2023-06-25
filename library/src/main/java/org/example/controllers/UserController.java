@@ -40,28 +40,39 @@ public class UserController {
 
     @RequestMapping("/login")
     public Result login(@RequestBody User user) {
-        User res = userService.login(user);
-        if(res != null){
-            Map<String,String> info = new HashMap<>();
+        Boolean res = userService.login(user);
+        Map<String,String> info = new HashMap<>();
+        if(res ){
+
             info.put("username",user.getUsername());
             String token = JwtUtil.generateToken(user.getUsername());
             info.put("token",token);
             System.out.println(info);
             return Result.ok(info);
         }else{
-            return Result.error(null);
+            info.put("error","用户或密码错误");
+            return Result.error(info);
 
         }
     }
     @RequestMapping("/register")
     public Result<Object> register(@RequestBody User user) {
-        userService.register(user);
+        System.out.println("rrrr");
+        boolean res = userService.register(user);
         Map<String,String> info = new HashMap<>();
-        info.put("username",user.getUsername());
-        String token = JwtUtil.generateToken(user.getUsername());
-        info.put("token",token);
-        System.out.println(info);
-        return Result.ok(info);
+        if(res){
+
+            info.put("username",user.getUsername());
+            String token = JwtUtil.generateToken(user.getUsername());
+            info.put("token",token);
+            System.out.println(info);
+            return Result.ok(info);
+        }
+        else {
+            info.put("error","该用户已经被注册");
+            return Result.error(info);
+        }
+
     }
 
 

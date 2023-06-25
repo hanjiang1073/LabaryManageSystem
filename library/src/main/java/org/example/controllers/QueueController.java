@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.example.common.Result;
 import org.example.entity.Queue;
+import org.example.entity.Reservation;
 import org.example.services.interfaces.IQueueService;
 import org.example.common.AutoLog;
 import org.springframework.web.bind.annotation.*;
@@ -42,29 +43,37 @@ public class QueueController {
 //        queue.setUserid(user.getId());
 //        queue.setDate(DateUtil.today());
 //        queue.setTime(DateUtil.now());
-        queueService.save(queue);
-        return Result.success();
+        Queue temp = queueService.getById(queue.getQueueId());
+
+        if(temp != null){
+            queueService.updateById(queue);
+
+        }
+        else {
+            queueService.save(queue);
+        }
+        return Result.ok(queue);
     }
 
     @AutoLog("编辑排队")
     @PutMapping
     public Result update(@RequestBody Queue queue) {
         queueService.updateById(queue);
-        return Result.success();
+        return Result.ok(queue);
     }
 
     @AutoLog("删除排队")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         queueService.removeById(id);
-        return Result.success();
+        return Result.ok("成功删除排队，id: "+id);
     }
 
     @AutoLog("批量删除排队")
     @PostMapping("/del/batch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
         queueService.removeByIds(ids);
-        return Result.success();
+        return Result.ok("成功批量删除排队");
     }
 
     @GetMapping

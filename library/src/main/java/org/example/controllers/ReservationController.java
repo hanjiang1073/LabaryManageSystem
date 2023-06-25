@@ -42,29 +42,39 @@ public class ReservationController {
 //        reservation.setUserid(user.getId());
 //        reservation.setDate(DateUtil.today());
 //        reservation.setTime(DateUtil.now());
+        Reservation temp = reservationService.getById(reservation.getReservationId());
+        System.out.println("re"+reservation);
+        System.out.println("temp"+temp);
+        if(temp != null){
+            reservationService.updateById(reservation);
+
+        }
+        else {
         reservationService.save(reservation);
-        return Result.success();
+        }
+
+        return Result.ok(reservation);
     }
 
     @AutoLog("编辑预约")
     @PutMapping
     public Result update(@RequestBody Reservation reservation) {
         reservationService.updateById(reservation);
-        return Result.success();
+        return Result.ok(reservation);
     }
 
     @AutoLog("删除预约")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         reservationService.removeById(id);
-        return Result.success();
+        return Result.ok("删除id: "+id+" 成功");
     }
 
     @AutoLog("批量删除预约")
     @PostMapping("/del/batch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
         reservationService.removeByIds(ids);
-        return Result.success();
+        return Result.ok("批量删除成功");
     }
 
     @GetMapping

@@ -24,7 +24,7 @@ public class Queue implements Serializable {
 
 private static final long serialVersionUID = 1L;
 
-    @TableId(value = "queue_id", type = IdType.AUTO)
+    @TableId("queue_id")
     private Integer queueId;
 
     private Integer userId;
