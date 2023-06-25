@@ -7,8 +7,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/library
     username: root
-    password: zzp200217
-#    password: 200136
+    #password: zzp200217
+    password: 200136
     #password: 2002820lzy
 #  application:
 #    name: login
@@ -29,6 +29,6 @@ spring:
 #    enabled: false
 
 server:
-  port: 8081
+  port: 8080
 
 

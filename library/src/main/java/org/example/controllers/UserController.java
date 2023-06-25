@@ -29,10 +29,9 @@ public class UserController {
     public Map<String, Object> test(@RequestParam("token") String jwt) throws Exception {
         //这个步骤可以使用自定义注解+AOP编程做解析jwt的逻辑，这里为了简便就直接写在controller里
         System.out.println("66666");
-        Claims claims = JwtUtil.parseJWT(jwt);
-        System.out.println(claims);
         HashMap<String, Object> map = new HashMap<>();
-        String name = claims.get("username", String.class);
+        String name = JwtUtil.getUsernameFromToken(jwt);
+        System.out.println(name);
         map.put("username", name);
         map.put("code", "0");
         map.put("msg", "请求成功");
@@ -45,7 +44,7 @@ public class UserController {
         if(res != null){
             Map<String,String> info = new HashMap<>();
             info.put("username",user.getUsername());
-            String token = JwtUtil.createJWT(UUID.randomUUID().toString(), user.getUsername(), null);
+            String token = JwtUtil.generateToken(user.getUsername());
             info.put("token",token);
             System.out.println(info);
             return Result.ok(info);
@@ -59,7 +58,7 @@ public class UserController {
         userService.register(user);
         Map<String,String> info = new HashMap<>();
         info.put("username",user.getUsername());
-        String token = JwtUtil.createJWT(UUID.randomUUID().toString(), user.getUsername(), null);
+        String token = JwtUtil.generateToken(user.getUsername());
         info.put("token",token);
         System.out.println(info);
         return Result.ok(info);

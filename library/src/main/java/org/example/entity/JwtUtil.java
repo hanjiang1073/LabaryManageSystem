@@ -1,58 +1,49 @@
 package org.example.entity;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
-    //有效期为
-    public static final Long JWT_TTL = 3600000L;// 60 * 60 *1000  一个小时
-    //设置秘钥明文
-    public static final String JWT_KEY = "itcast";
-    public static String createJWT(String id, String subject, Long ttlMillis) {
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-        long nowMillis = System.currentTimeMillis();
-        Date now = new Date(nowMillis);
-        if(ttlMillis==null){
-            ttlMillis=JwtUtil.JWT_TTL;
-        }
-        long expMillis = nowMillis + ttlMillis;
-        Date expDate = new Date(expMillis);
-        SecretKey secretKey = generalKey();
-        JwtBuilder builder = Jwts.builder()
-                .setId(id)              //唯一的ID
-                .setSubject(subject)   // 主题  可以是JSON数据
-                .setIssuer("admin")     // 签发者
-                .setIssuedAt(now)      // 签发时间
-                .signWith(signatureAlgorithm, secretKey) //使用HS256对称加密算法签名, 第二个参数为秘钥
-                .setExpiration(expDate);// 设置过期时间
-        return builder.compact();
+
+    private static final String SECRET_KEY = "cuAihCz53DZRjZwbsGcZJ2Ai6At+T142uphtJMsk7iQ=";
+
+    public static String generateToken(String username) {
+        Date now = new Date();
+        Date expirationDate = new Date(now.getTime() + 3600000); // 1 hour
+
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
     }
-    /**
-     * 生成加密后的秘钥 secretKey
-     * @return
-     */
-    public static SecretKey generalKey() {
-        byte[] encodedKey = Base64.getDecoder().decode(JwtUtil.JWT_KEY);
-        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
-        return key;
+
+    public static String getUsernameFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
-    public static Claims parseJWT(String jwt) throws ExpiredJwtException {
-        Claims claims;
-        SecretKey secretKey = generalKey();
+
+    public static boolean validateToken(String token) {
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(secretKey) // 设置标识名
-                    .parseClaimsJws(jwt)  //解析token
-                    .getBody();
-        } catch (ExpiredJwtException e) {
-            claims = e.getClaims();
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return claims;
     }
+
+
 }
+
+
+

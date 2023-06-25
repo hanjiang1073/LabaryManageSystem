@@ -6,7 +6,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.example.entity.Inventory;
-import org.example.springboot.services.interfaces.IInventoryService;
+import org.example.services.interfaces.IInventoryService;
 import org.example.common.AutoLog;
 import org.example.common.Result;
 import org.springframework.web.bind.annotation.*;
